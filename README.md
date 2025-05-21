@@ -15,6 +15,7 @@ An intelligent meal recommendation system that scrapes Mercadona products and su
 
 📜 License
 This project is licensed under the MIT License - see the LICENSE file for details.
+
 📬 Contact
 Anton Persson - Antonnilspersson@gmail.com
 Project Link: https://github.com/antonnpersson/mealrecommender
