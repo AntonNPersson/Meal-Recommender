@@ -12,3 +12,11 @@ An intelligent meal recommendation system that scrapes Mercadona products and su
 * Nutritional Analysis: Provides nutritional insights for recommended meal plans
 * Cost Optimization: Creates affordable meal plans that fit your budget
 * Easy to Use: Simple command-line interface for quick meal planning
+
+📜 License
+This project is licensed under the MIT License - see the LICENSE file for details.
+📬 Contact
+Anton Persson - Antonnilspersson@gmail.com
+Project Link: https://github.com/antonnpersson/mealrecommender
+
+⭐ Star this project if you find it useful!
