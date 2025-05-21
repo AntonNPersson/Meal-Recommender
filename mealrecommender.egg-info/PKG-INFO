@@ -1,0 +1,26 @@
+Metadata-Version: 2.4
+Name: mealrecommender
+Version: 0.1.0
+Summary: A web scraper and meal recommender (machine learning) for Mercadona.
+Home-page: https://github.com/antonnpersson/mealrecommender
+Author: Anton Persson
+Author-email: Antonnilspersson@gmail.com
+Keywords: web scraper,mercadona,food prices,machine learning,meal recommender
+Classifier: Development Status :: 3 - Alpha
+Classifier: Intended Audience :: Developers
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Requires-Python: >=3.8
+Requires-Dist: seleniumbase
+Requires-Dist: bs4
+Requires-Dist: pandas
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: home-page
+Dynamic: keywords
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary
