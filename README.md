@@ -1,6 +1,8 @@
 # MealRecommender 🥗 🛒
 ![Python Version](https://img.shields.io/badge/python-3.8%2B-blue)
 ![License](https://img.shields.io/badge/license-MIT-green)
+![Build Status](https://img.shields.io/github/workflow/status/antonnpersson/mealrecommender/CI)
+![Code Coverage](https://img.shields.io/codecov/c/github/antonnpersson/mealrecommender)
 
 An intelligent meal recommendation system that scrapes Mercadona products and suggests personalized meal plans based on your preferences, budget, and nutritional needs.
 
