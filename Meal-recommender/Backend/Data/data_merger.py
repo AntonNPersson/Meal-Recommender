@@ -55,5 +55,5 @@ class DataMerger:
             instructions=api_data['strInstructions'],
             ingredients=ingredients,
             image_url=api_data.get('strMealThumb'),
-            estimated_cost=total_cost
+            estimated_cost=round(total_cost, 2)
         )

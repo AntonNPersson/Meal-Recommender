@@ -1,4 +1,4 @@
 /venv
-mercadona_scraper.log
+*.log
 __pycache__/
 before_categories.png
