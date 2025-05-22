@@ -1,8 +1,0 @@
-setup.py
-Scraper/__init__.py
-Scraper/mercadona-scraper.py
-mealrecommender.egg-info/PKG-INFO
-mealrecommender.egg-info/SOURCES.txt
-mealrecommender.egg-info/dependency_links.txt
-mealrecommender.egg-info/requires.txt
-mealrecommender.egg-info/top_level.txt

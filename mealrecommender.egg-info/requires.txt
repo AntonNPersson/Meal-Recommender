@@ -1,3 +1,0 @@
-seleniumbase
-bs4
-pandas

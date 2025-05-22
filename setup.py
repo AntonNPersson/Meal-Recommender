@@ -8,7 +8,9 @@ setup(
         "seleniumbase",
         "bs4",
         "pandas",
-        "pycli"
+        "pycli",
+        "requests",
+        "beautifulsoup4"
     ],
     author="Anton Persson",
     author_email="Antonnilspersson@gmail.com",
