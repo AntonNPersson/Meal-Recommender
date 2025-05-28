@@ -15,7 +15,7 @@ An intelligent meal recommendation system that scrapes Mercadona products and su
 
 🔧 Prerequisites
 * Python 3.8 or higher
-* Food.com csv dataset (for meal recommendations) - [Download here](https://www.kaggle.com/datasets/irkaal/foodcom-recipes-and-reviews/data) (make sure to place it in the `data/raw` directory)
+* Food.com csv dataset (for meal recommendations) - [Download here](https://www.kaggle.com/datasets/irkaal/foodcom-recipes-and-reviews/data) (make sure to place both recipes.csv and reviews.csv in the `meal-recommender/data/raw` directory), If you want to retrain the model.
 
 📜 License
 

@@ -5,10 +5,17 @@ from Backend.models.ingredient import Ingredient
 from typing import List
 
 class DataMerger:
-    def __init__(self, mercadona_csv_file_path: str, food_csv_file_path: str, training_limit: int = 1000):
+    def __init__(self, mercadona_csv_file_path: str = None, food_csv_file_path: str = None):
+        self.mercadona_csv_file_path = mercadona_csv_file_path
+        self.food_csv_file_path = food_csv_file_path
+
         self.meal_api = MealDBAPI()
         self.price_processor = MercadonaCSVProcessor(mercadona_csv_file_path)
-        self.training_processor = FoodCSVProcessor(food_csv_file_path, limit=training_limit)
+
+        self.is_training = False
+        if food_csv_file_path:
+            self.training_processor = FoodCSVProcessor(food_csv_file_path)
+            self.is_training = True
     
     def get_enriched_meals(self, search_term: str) -> List[Meal]:
         """Get meals from API and enrich with pricing data"""
@@ -43,6 +50,12 @@ class DataMerger:
     
     def get_all_training_meals(self) -> List[Meal]:
         """Get all training meals from CSV and convert to Meal model with pricing"""
+        if not self.is_training:
+            raise RuntimeError("DataMerger is not initialized for training data. Provide a food CSV file path.")
+        
+        if not self.training_processor:
+            raise RuntimeError("Training processor is not initialized. Provide a food CSV file path.")
+
         training_data = self.training_processor.get_all_data()
         if not training_data:
             return []

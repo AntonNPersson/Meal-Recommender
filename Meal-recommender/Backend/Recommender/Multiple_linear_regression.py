@@ -77,8 +77,8 @@ class MultipleLinearRegressionModel:
             
         return X_test, y_test, y_pred
    
-    def train_model_with_sgd(self, df, learning_rate=0.01, feature_names=['ingredient_count', 'instruction_length', 'prep_keyworks_count', 'fresh_ratio'], 
-                            target_name='estimated_prep_time', categorical_column='category'):
+    def train_model_with_sgd(self, df, learning_rate=0.01, limit=1000, feature_names=['ingredient_count', 'instruction_length', 'prep_keyworks_count', 'fresh_ratio'], 
+                            target_name='prep_time_target', categorical_column='category'):
         """
         Train the model using Stochastic Gradient Descent with a specified learning rate.
         """
@@ -121,7 +121,7 @@ class MultipleLinearRegressionModel:
         self.model = SGDRegressor(
             eta0=learning_rate,           # Learning rate
             learning_rate='constant',     # Keep learning rate constant
-            max_iter=1000, 
+            max_iter=limit, 
             tol=1e-3,
             random_state=42
         )

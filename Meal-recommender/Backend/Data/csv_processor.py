@@ -78,9 +78,9 @@ class FoodCSVProcessor:
     A class to process CSV files from food databases and extract ingredient information.
     """
 
-    def __init__(self, csv_file: str, limit: int = 100):
+    def __init__(self, csv_file: str):
         self.csv_file = csv_file
-        self.df = pd.read_csv(csv_file, nrows=limit)
+        self.df = pd.read_csv(csv_file)
 
     def get_ingredients(self) -> list:
         """
