@@ -10,7 +10,9 @@ setup(
         "pandas",
         "pycli",
         "requests",
-        "beautifulsoup4"
+        "beautifulsoup4",
+        "scikit-learn",
+        "numpy",
     ],
     author="Anton Persson",
     author_email="Antonnilspersson@gmail.com",

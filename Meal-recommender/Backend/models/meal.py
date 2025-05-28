@@ -12,5 +12,6 @@ class Meal:
     estimated_cost: Optional[float] = None
     prep_time: Optional[int] = None  # in minutes
     servings: Optional[int] = None
+    keywords: Optional[List[str]] = None
     image_url: Optional[str] = None
 
