@@ -10,12 +10,12 @@ import pandas as pd
 import logging
 
 # Import utility functions
-from Scrapers.utils.parser import wait_for_elements, initialize_driver
+from .utils.parser import wait_for_elements, initialize_driver
 
 class MercadonaScraper:
     """Selenium-based scraper for Mercadona products"""
     
-    def __init__(self, output_dir="data/raw", postal_code="03005"):
+    def __init__(self, output_dir="Meal-recommender/data/raw", postal_code="03005"):
         """Initialize the scraper"""
         self.output_dir = output_dir
         self.postal_code = postal_code
@@ -368,6 +368,7 @@ class MercadonaScraper:
             
         finally:
             # Always close the driver
+            self.logger.info("Closing the driver.")
             if self.driver:
                 self.driver.quit()
 

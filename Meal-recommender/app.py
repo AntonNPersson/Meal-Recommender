@@ -1,7 +1,9 @@
 from Backend.Recommender.MealPredictionService import MealPredictionService
+from Backend.Scrapers.MercadonaScraper import MercadonaScraper
 
 def main():
     service = MealPredictionService(limit=1000)
+    mercadona_scraper = MercadonaScraper()
     print("Loading...")
     service.prepare_model(limit=1000)
     print("Loaded successfully!")
@@ -23,11 +25,18 @@ def main():
                 print("1. --s <search_term> / --search <search_term> - Search for meals by ingredient or category.")
                 print("2. --quit / --q or --exit / --e - Exit the application.")
                 print("3. --help / --h - Show this help message.")
+                print("4. --scrape - Scrape the latest mercadona price data.")
                 continue
 
             if user_input.startswith('--s ') or user_input.startswith('--search '):
                 search_term = user_input.split(maxsplit=1)[1]
                 print_meal_from_search_term(search_term, service)
+                continue
+
+            if user_input.startswith('--scrape'):
+                print("Starting scraping process...")
+                mercadona_scraper.run()
+                print("Scraping completed successfully!")
                 continue
             
             print("Invalid command. Type 'help' for available commands.")

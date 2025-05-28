@@ -28,7 +28,7 @@ def initialize_driver():
     driver = Driver(
         browser="chrome",
         uc=True,
-        headless2=False,  # Set to True for headless mode
+        headless2=True,  # Set to True for headless mode
         incognito=False,
         agent='Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
         do_not_track=True,

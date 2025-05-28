@@ -7,10 +7,15 @@ An intelligent meal recommendation system that scrapes Mercadona products and su
 
 🌟 Features
 * Web Scraping: Automatically collects up-to-date product information from Mercadona
-* Smart Recommendations: Uses machine learning to suggest meals based on your preferences and budget
-* Nutritional Analysis: Provides nutritional insights for recommended meal plans
-* Cost Optimization: Creates affordable meal plans that fit your budget
+* Smart Recommendations: Uses machine learning to estimate preparation time and suggest meals based on your preferences/dietary restrictions/groceries
+* Smart Rating: Generates a smart rating for each meal based on ingredients, preparation time, and user preferences
+* Cost Optimization: Creates affordable meal plans that fit your budget based on current mercadona prices
+* Bot Integration: Integrates with Telegram for easy meal planning and recommendations
 * Easy to Use: Simple command-line interface for quick meal planning
+
+🔧 Prerequisites
+* Python 3.8 or higher
+* Food.com csv dataset (for meal recommendations) - [Download here](https://www.kaggle.com/datasets/irkaal/foodcom-recipes-and-reviews/data) (make sure to place it in the `data/raw` directory)
 
 📜 License
 
@@ -21,5 +26,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 Anton Persson - Antonnilspersson@gmail.com
 
 Project Link: https://github.com/antonnpersson/mealrecommender
-
-⭐ Star this project if you find it useful!

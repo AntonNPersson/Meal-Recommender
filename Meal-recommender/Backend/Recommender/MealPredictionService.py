@@ -2,11 +2,24 @@ from Backend.Recommender.Multiple_linear_regression import MultipleLinearRegress
 from Backend.Data.data_merger import DataMerger
 from Backend.Data.meal_feature_extractions import MealFeatureExtractor
 import pandas as pd
+import os
 
 class MealPredictionService:
     def __init__(self, limit: int = 1000):
-        self.mercadona_csv_file_path = r"C:\Users\Anton\Documents\Meal Recommender\Meal-recommender\data\raw\mercadona_products_latest.csv"
-        self.food_csv_file_path = r"C:\Users\Anton\Documents\Meal Recommender\Meal-recommender\data\raw\recipes.csv"
+        backend_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.dirname(os.path.dirname(backend_dir))
+        self.mercadona_csv_file_path = os.path.join(project_root, "data", "raw", "mercadona_products_latest.csv")
+        self.food_csv_file_path = os.path.join(project_root, "data", "raw", "recipes.csv")
+
+        if limit <= 0:
+            raise ValueError("Limit must be a positive integer.")
+        
+        if not os.path.exists(self.mercadona_csv_file_path):
+            raise FileNotFoundError(f"Mercadona CSV file not found at {self.mercadona_csv_file_path}")
+        
+        if not os.path.exists(self.food_csv_file_path):
+            raise FileNotFoundError(f"Food CSV file not found at {self.food_csv_file_path}")
+
         self.feature_extractor = MealFeatureExtractor(
             mercadona_csv_path=self.mercadona_csv_file_path,
             food_csv_path=self.food_csv_file_path,
