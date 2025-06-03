@@ -5,24 +5,35 @@ from Backend.models.ingredient import Ingredient
 from typing import List
 
 class DataMerger:
-    def __init__(self, mercadona_csv_file_path: str = None, food_csv_file_path: str = None):
+    def __init__(self, mercadona_csv_file_path: str = None, food_csv_file_path: str = None, review_csv_file_path: str = None):
         self.mercadona_csv_file_path = mercadona_csv_file_path
         self.food_csv_file_path = food_csv_file_path
+        self.review_csv_file_path = review_csv_file_path
 
         self.meal_api = MealDBAPI()
         self.price_processor = MercadonaCSVProcessor(mercadona_csv_file_path)
 
         self.is_training = False
         if food_csv_file_path:
-            self.training_processor = FoodCSVProcessor(food_csv_file_path)
+            self.training_processor = FoodCSVProcessor(food_csv_file_path, review_csv_file_path)
             self.is_training = True
     
     def get_enriched_meals(self, search_term: str) -> List[Meal]:
         """Get meals from API and enrich with pricing data"""
-        api_meals = self.meal_api.search_by_ingredient(search_term)
+        search_methods = [
+            ('search_by_ingredient', self.meal_api.search_by_ingredient),
+            ('search_by_category', self.meal_api.search_by_category),
+            ('search_by_area', self.meal_api.search_by_area)
+        ]
 
-        if not api_meals or len(api_meals) == 0:
-            return []
+        api_meals = []
+        for method_name, method in search_methods:
+            try:
+                meals = method(search_term)
+                if meals:
+                    api_meals.extend(meals)
+            except Exception as e:
+                print(f"Error in {method_name} for search term '{search_term}': {e}")
         
         enriched_meals = []
         for meal_data in api_meals:
@@ -90,6 +101,8 @@ class DataMerger:
             prep_time=training_data.get('prep_time', 0),
             keywords=training_data.get('keywords', []),
             estimated_cost=training_data.get('estimated_cost', 0.0),
+            rating=training_data.get('rating', None),
+            review_count=training_data.get('review_count', 0),
         )
     
     def _convert_to_meal_model(self, api_data: dict) -> Meal:

@@ -35,4 +35,14 @@ class MealDBAPI:
             print(f"Error: {response.status_code}")
             return []
         
+    def search_by_area(self, area: str) -> List[Dict]:
+        url = f"{self.base_url}filter.php?a={area}"
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            return data.get("meals", [])
+        else:
+            print(f"Error: {response.status_code}")
+            return []
+        
     

@@ -10,7 +10,7 @@ import pandas as pd
 import logging
 
 # Import utility functions
-from .utils.parser import wait_for_elements, initialize_driver
+from .Utils.parser import wait_for_elements, initialize_driver
 
 class MercadonaScraper:
     """Selenium-based scraper for Mercadona products"""

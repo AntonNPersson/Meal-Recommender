@@ -4,3 +4,5 @@ __pycache__/
 before_categories.png
 *.csv
 /downloaded_files
+meal_recommender_new.db
+device_id.txt

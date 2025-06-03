@@ -1,8 +1,8 @@
 import pandas as pd
 from typing import Optional, Dict
-from .parser import ProductNameParser
-from .translator import IngredientTranslator
-from .csv_utils import parse_r_vector, parse_r_vector_to_string, parse_ISO_8601_duration
+from .Utils.parser import ProductNameParser
+from .Utils.translator import IngredientTranslator
+from .Utils.csv_utils import parse_r_vector, parse_r_vector_to_string, parse_ISO_8601_duration
 import re
 
 class MercadonaCSVProcessor:
@@ -78,9 +78,38 @@ class FoodCSVProcessor:
     A class to process CSV files from food databases and extract ingredient information.
     """
 
-    def __init__(self, csv_file: str):
+    def __init__(self, csv_file: str, review_csv_file: Optional[str] = None):
         self.csv_file = csv_file
         self.df = pd.read_csv(csv_file)
+
+        if review_csv_file:
+            self.review_df = pd.read_csv(review_csv_file)
+            self.df = self._merge_with_reviews()
+        else:
+            self.review_df = None
+
+    def _merge_with_reviews(self):
+        """
+        Merge the recipes dataframe with the reviews dataframe.
+        Assumes both have a common 'RecipeId' column (adjust as needed).
+        """
+        # Group reviews by recipe and calculate aggregate ratings
+        review_aggregates = self.review_df.groupby('RecipeId').agg({
+            'Rating': ['mean', 'count', 'std']
+        }).round(2)
+        
+        # Flatten column names
+        review_aggregates.columns = ['avg_rating', 'review_count', 'rating_std']
+        review_aggregates = review_aggregates.reset_index()
+        
+        # Merge with recipes dataframe
+        merged_df = self.df.merge(
+            review_aggregates, 
+            on='RecipeId', 
+            how='left'  # Keep all recipes, even those without reviews
+        )
+        
+        return merged_df
 
     def get_ingredients(self) -> list:
         """
@@ -150,12 +179,33 @@ class FoodCSVProcessor:
         """
         data = []
         for _, row in self.df.iterrows():
-            data.append({
+
+            recipe_data = ({
                 'ingredients': parse_r_vector(row['RecipeIngredientParts']),
                 'instructions': parse_r_vector_to_string(row['RecipeInstructions']),
                 'category': row['RecipeCategory'],
                 'keywords': parse_r_vector(row['Keywords']),
                 'prep_time': parse_ISO_8601_duration(row['PrepTime'])
             })
+
+            if recipe_data['prep_time'] is None:
+                recipe_data['prep_time'] = 0
+            
+            if recipe_data['prep_time'] <= 0 or recipe_data['prep_time'] > 1440:
+                continue # Skip recipes with invalid prep times
+
+            if not self.review_df.empty:
+                recipe_data.update({
+                    'rating': row['avg_rating'],
+                    'review_count': row['review_count'],
+                    'rating_std': row['rating_std']
+                })
+            else:
+                recipe_data.update({
+                    'rating': None,
+                    'review_count': 0,
+                    'rating_std': None
+                })
+            data.append(recipe_data)
         return data
         

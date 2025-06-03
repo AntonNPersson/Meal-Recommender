@@ -14,6 +14,7 @@ class MealDataManager:
 
         # Optional CSV file path for training data
         self.food_csv_file_path = os.path.join(project_root, "data", "raw", "recipes.csv")
+        self.review_csv_file_path = os.path.join(project_root, "data", "raw", "reviews.csv")
         self.has_training_data = os.path.exists(self.food_csv_file_path)
 
         # API Service
@@ -33,7 +34,8 @@ class MealDataManager:
         
         return DataMerger(
             mercadona_csv_file_path=self.mercadona_csv_file_path,
-            food_csv_file_path=food_path
+            food_csv_file_path=food_path,
+            review_csv_file_path=self.review_csv_file_path if self.has_training_data else None
         )
     
     # API Methods

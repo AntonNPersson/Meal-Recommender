@@ -77,7 +77,7 @@ class MultipleLinearRegressionModel:
             
         return X_test, y_test, y_pred
    
-    def train_model_with_sgd(self, df, learning_rate=0.01, limit=1000, feature_names=['ingredient_count', 'instruction_length', 'prep_keyworks_count', 'fresh_ratio'], 
+    def train_model_with_sgd(self, df, learning_rate=0.001, limit=1000, feature_names=['ingredient_count', 'instruction_length', 'prep_keyworks_count', 'fresh_ratio'], 
                             target_name='prep_time_target', categorical_column='category'):
         """
         Train the model using Stochastic Gradient Descent with a specified learning rate.
@@ -109,6 +109,12 @@ class MultipleLinearRegressionModel:
             
         # Store feature column names for predictions
         self.feature_columns = X.columns.tolist()
+
+        print("Target variable analysis:")
+        print(f"Target mean: {Y.mean():.2f}")
+        print(f"Target std: {Y.std():.2f}")
+        print(f"Target min: {Y.min():.2f}")
+        print(f"Target max: {Y.max():.2f}")
         
         # Split data
         X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=42)
@@ -116,13 +122,18 @@ class MultipleLinearRegressionModel:
         # Scale features
         X_train_scaled = self.scaler.fit_transform(X_train)
         X_test_scaled = self.scaler.transform(X_test)
+
+        print("Feature scales before scaling:")
+        print(X_train.describe().loc[['mean', 'std', 'min', 'max']])
+        print("\nFeature scales after scaling:")
+        print(pd.DataFrame(X_train_scaled, columns=self.feature_columns).describe().loc[['mean', 'std', 'min', 'max']])
         
         # Use SGD with learning rate (eta0 parameter)
         self.model = SGDRegressor(
             eta0=learning_rate,           # Learning rate
             learning_rate='constant',     # Keep learning rate constant
             max_iter=limit, 
-            tol=1e-3,
+            tol=None,
             random_state=42
         )
         
