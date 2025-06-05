@@ -3,6 +3,9 @@ import time
 import requests
 
 class SpoonacularAPI:
+    """
+    A class to interact with the Spoonacular API for recipe searches."""
+
     def __init__(self, api_key = Optional[str]):
         self.base_url = "https://api.spoonacular.com/recipes"
         self.api_key = api_key

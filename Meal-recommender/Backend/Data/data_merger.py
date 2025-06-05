@@ -43,6 +43,15 @@ class DataMerger:
         
         return enriched_meals
     
+    def get_random_enriched_meal(self) -> Meal:
+        """Get a random meal from API and enrich with pricing data"""
+        random_meal_data = self.meal_api.get_random_meal()
+        if not random_meal_data:
+            return None
+        
+        full_meal = self.meal_api.get_meal_details(random_meal_data['idMeal'])
+        return self._convert_to_meal_model(full_meal)
+    
     def get_all_enriched_meals(self) -> List[Meal]:
         categories = ['Beef', 'Chicken', 'Dessert', 'Pasta', 'Seafood', 'Vegetarian']
         """Get all meals from API and enrich with pricing data"""

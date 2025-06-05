@@ -2,6 +2,9 @@ import requests
 from typing import List, Dict, Optional
 
 class MealDBAPI:
+    """
+    A simple API client for TheMealDB to search for meals by ingredient, category, or area,"""
+
     def __init__(self):
         self.base_url = "https://www.themealdb.com/api/json/v1/1/"
 
@@ -44,5 +47,15 @@ class MealDBAPI:
         else:
             print(f"Error: {response.status_code}")
             return []
+        
+    def get_random_meal(self) -> Optional[Dict]:
+        url = f"{self.base_url}random.php"
+        response = requests.get(url)
+        if response.status_code == 200:
+            data = response.json()
+            return data.get("meals", [])[0] if data.get("meals") else None
+        else:
+            print(f"Error: {response.status_code}")
+            return None
         
     

@@ -23,6 +23,16 @@ class UserService:
             self.user_repository.add(user)
         return user
     
+    def get_or_create_user(self, user_id: int) -> User:
+        """
+        Retrieve a user by ID or create a new one if it doesn't exist.
+        """
+        user = self.user_repository.get_by_id(user_id)
+        if not user:
+            user = User(id=user_id, prefered_flavors=[], prefered_types=[], dietary_restrictions=[])
+            self.user_repository.add(user)
+        return user
+    
     def update_user_preferences(self, user_id: int, prefered_flavors: list = None, 
                              prefered_types: list = None, dietary_restrictions: list = None) -> User:
         """
@@ -59,3 +69,9 @@ class UserService:
         Check if the CLI device ID file exists.
         """
         return os.path.exists("device_id.txt")
+    
+    def user_exists(self, user_id: int) -> bool:
+        """
+        Check if a user exists by ID.
+        """
+        return self.user_repository.get_by_id(user_id) is not None

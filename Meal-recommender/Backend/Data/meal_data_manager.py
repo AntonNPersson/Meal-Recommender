@@ -43,6 +43,10 @@ class MealDataManager:
         """Get enriched meals based on a search term."""
         return self._data_merger.get_enriched_meals(search_term)
     
+    def get_random_enriched_meal(self) -> dict:
+        """Get a random enriched meal from the API."""
+        return self._data_merger.get_random_enriched_meal()
+    
     def get_all_enriched_meals(self) -> list:
         """Get all enriched meals from the API."""
         return self._data_merger.get_all_enriched_meals()
